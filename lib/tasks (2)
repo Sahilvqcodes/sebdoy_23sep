@@ -1,0 +1,48 @@
+Task #1
+I'd like a small change made to the current username rules. Currently, if you make an account with a username named "abc" but try to log in by entering "AbC", it won't let you log in. Instead, I'd like the user to be able to log in whenever they try logging in with the same order of credentials, regardless of whether the letters are uppercase or lowercase. In other words, if a user's username is "abc" and they try logging in with "aBc" or "Abc" or "ABc" etc. etc., it should let them log in because it has the exact same order of letters & numbers. 
+
+Task #2
+If you click on "create" on the bottom tab bar and create a new poll, then head back go to the home screen but instead of voting on the home screen, you decide to click on "comments" which will navigate you to the comments page for that poll, you'll notice that you can give your vote there as well.. If you vote there first and then head back to the home page, you'll notice that you can vote a 2nd time on the home page as well. I'd like this to be fixed so that each user can only give a single vote for each poll.
+
+Task #3
+If you go to settings and click on "Blocked List", you'll notice an empty page. On this page we should instead have a list of the user's blocked accounts. That list should contain a row with 3 different objects: the profile image of the blocked user + their username and also include a "remove" button that lets the user remove any account from that list. Don't worry about the style here, a simple list that contains these 3 objects will do just fine. The accounts that are in the user's list will still show up in the user's messages and polls feed but instead of displaying the message title or poll options, it'll instead display text: "user blocked" instead. To add a user to the blocked list, you simply have to click on the 3 small dots icon on the right side of a message/poll card and then click "Block User", once that button is clicked, a snackbar will appear saying "user blocked" as soon as that account is successfully blocked and added to the list.
+
+Task #4
+On the home screen, you can see each message has a placement # attached to it. In short, the placement number of each message is determined by the score. The higher the score, the higher the message will be placed on the list. Although this works great on the home screen, it doesn't work as intended if you go to a user's profile page. On the profile page, you'll notice that the placement numbers only compares with other messages sent by the same user. Instead, the index number displayed on the profile screen should also mimic the number that is displayed on the home screen. Additionally, we have a "category" field for each message. When a user sends a message, "category" will be "1" by default but the category for certain messages may change in the future. Messages with a "category" with "1" as their value should only compete with other messages that also have "category" with "1" as their value. 
+
+Here's an example - We have 5 total messages:
+
+Message 1: 
+Sent by: UserOne
+Score: 4
+Category: 1
+IndexPlacement: #1
+
+Message 2:
+Sent by: UserOne
+Score: 3
+Category: 2
+IndexPlacement: #1
+
+Message 3:
+Sent by: UserTwo
+Score: 1
+Category: 1
+IndexPlacement: #2
+
+Message 4:
+Sent by: UserTwo
+Score: 1
+Category: 2
+IndexPlacement: #2
+
+Message 5:
+Sent by: UserThree
+Score: 0
+Category: 1
+IndexPlacement: #3
+
+This is the exact order which messages should be displayed on the home screen. (The higher the score, the higher it is on the list.) Notice there's two #1's and two #2's for index placements and that's because we have two different categories (messages only compete against messages with the same category). The index placement shouldn't change when navigating a to someone's profile screen. Example: Navigating to UserThree's profile screen shouldn't display "#1" because there's only oen message sent by that user but instead it should display #3 because that's its real placement if you compare its score with messages in that same category number.
+
+Task #5
+If you go to "create" screen and upload a video from your phone (clicking on the 3rd icon from the left) and then head back to the home screen, you'll notice that the video's real width/height is stretched to fill the SizedBox (message_card.dart - line 500). I'd like to see the video's original width and height get displayed on the home screen instead. Additionally, I'd like to see a full screen option implemented to the current code. To be more specific: an icon stacked on top of the video thumbnail. Once the icon is clicked, it opens up the video in full screen. Tilting the phone to one side should also work in full screen and not cause any errors.

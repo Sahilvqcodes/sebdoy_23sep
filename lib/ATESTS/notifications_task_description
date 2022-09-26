@@ -1,0 +1,47 @@
+The goal of this job is to integrate a notification system within the application. The notifications page will contain a list of different messages based on different actions that occur around the app.
+
+Here are all the different types of messages users can receive in notifications based on the actions of other users:
+-A message you've created received "" "plus" votes.
+-A message you've created received "" "neutral" votes.
+-A message you've created received "" "minus" votes.
+-A poll you've created received "" votes.
+
+-A message you've created received "" comments.
+-A poll you've created received "" comments.
+
+-A comment you've created received "" replies.
+
+-A comment you've created received "" likes.
+-A comment you've created received "" dislikes.
+-A reply you've created received "" likes.
+-A reply you've created received "" dislikes.
+
+-Someone mentioned you. 
+
+These various messages will all be displayed within one list/feed inside the notifications tab. (clicking on the notification icon on the bottom naviagtion bar).
+
+Each user will have the option to turn off or turn on specific notification messages mentioned above. If you go to the notification tab and click on the upper left icon, it'll navigate you to a page with a list of switches. By default all these switches are turned on and their value is "true" but if the user decides to turn off a specific notification message, all they have to do is click on that specific switch and doing so will make that specific notification message no longer appear in their notification list/feed. Feel free to use the shared preferences dependency to share information between pages/classes here if you wish.
+
+Notice that almost every notification message contains a pair of "" which will be replaced by the length of an array or another field found in the firestore database.
+Example:
+For messages sent (in the firestore database the message collection is called "posts") which has a "plus" field which contains a list/array of every uid that voted "plus" for that specific post. That means we would need to extract the length of that array and display it on the screen. And for likes and dislikes its even easier as it already has a field named "likeCount" & "dislikeCount" which already calculates the specific number we're looking for. 
+
+Now we also want to extract the specific uids of the users who performed the action that made us receive a specific notification message. When you click on the number in the notification message, it should navigate you to a new page where you have a list of every user who performed that specific action. Example: Let's say you received this notification message: "A message you've created received 20 "plus" votes". This means that clicking on "20" will bring you to a new page which will contain a list of every user who gave your message a "plus" vote. We'll need to extract two pieces of information for that specific list of users/uid's. 1) their username 2) their profile picture which is under the name of "photoUrl" in the firestore database. On this page, the user will have the ability to click on a specific tile in the list of different usernames to visit the profile page of the user they clciked on (the profile page is already created -> profile_screen./dart file).
+
+Now back to the notifications tab, whenever the user clicks on the notification message (anywhere other than the number because the number displays the list of usernames that we just described), it should navigate them to that specific message, poll, comment or reply within the app.
+For messages -> full_message.dart file
+For polls -> full_message_poll.dart file
+For comments & replies -> comment_card.dart or comment_card_poll.dart file depending on whether this comment was written under a message or a poll, + it should navigate to the exact area where the comment or reply is currently placed within the list of every other comment and reply. (Let me know if you think this is possible).
+
+And lastly for the "Someone mentioned you" notification message, this action should pop up in your notifications feed whenever another user uses the "@" character right before your current username anywhere in the comments or replies sections of the app. Clicking on the "Someone mentioned you" notification message should navigate you to that specific message where you've been mentioned. (Also let me know if you think this si spossible and can achieve this task).
+
+Additional important tasks and things to note:
+-It should never show two identical notification messages for a single post/poll/comment/reply. Example: Let's say you create a message and it receives 1 "plus" vote. When you go to look at your notification feed, you'll receive this notification message: "A message you've created received 1 "plus" vote." If the next day it receives an additional 5 "plus" votes, it shouldn't show two different notification messages like this : "A message you've created received 1 "plus" vote." & "A message you've created received 5 "plus" votes." but instead it should only show: "A message you've created received 6 "plus" votes." Let me know if that makes sense and if needed, I can always go into more details.
+
+-For the order which the the notification messages should be displayed should always be decided by the most recent actions (newest notification messages should always be shown at the top of the list).
+
+-Unread notification messages should appear a different color compared to read notification messages. To determine whether a notification message is read or unread, whenever the user visits the "notification" tab, all notification messages that had a new action between the last time they visited the notification page and now should be marked as "unread" while all other messages should be marked as "read". Additionally, whenever there is one or more "unread" notification message, it should display a small red dot stacked on top of the notification icon in the bottom navigation bar which can be found in the AMobile_screen_layout.dart file.
+
+-Feel free to use the rxdart dependency if needed for stream builders or any other use.
+
+-Flutter version: 3.0.1
