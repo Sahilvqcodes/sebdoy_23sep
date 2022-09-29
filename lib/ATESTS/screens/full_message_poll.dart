@@ -177,7 +177,7 @@ class _FullMessagePollState extends State<FullMessagePoll> {
   late CommentSort _selectedCommentSort;
   late CommentFilter _selectedCommentFilter;
 
-  _otherUsers(BuildContext context) async {
+  _otherUsers(BuildContext context, String? uid) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -196,7 +196,10 @@ class _FullMessagePollState extends State<FullMessagePoll> {
                 onPressed: () {
                   performLoggedUserAction(
                     context: context,
-                    action: () {},
+                    action: () {
+                      FirestoreMethods().addBlockList(uid, _poll.uid);
+                      Navigator.pop(context);
+                    },
                   );
                 },
               ),
@@ -676,8 +679,8 @@ class _FullMessagePollState extends State<FullMessagePoll> {
                                                 onPressed: _poll.uid ==
                                                         user?.uid
                                                     ? () => _deletePost(context)
-                                                    : () =>
-                                                        _otherUsers(context),
+                                                    : () => _otherUsers(
+                                                        context, user?.uid),
                                                 icon:
                                                     const Icon(Icons.more_vert),
                                               ),

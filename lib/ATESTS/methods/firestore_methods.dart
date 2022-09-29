@@ -170,6 +170,16 @@ class FirestoreMethods {
     }
   }
 
+  Future<void> addBlockList(String? uid, String userUid) async {
+    try {
+      FirebaseFirestore.instance.collection("users").doc(uid).update({
+        'blockList': FieldValue.arrayUnion([userUid])
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> totalVotesPoll(String pollId, String uid, int totalVotes) async {
     try {
       await _firestore.collection('posts').doc(pollId).update(

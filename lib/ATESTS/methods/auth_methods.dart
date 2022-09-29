@@ -82,6 +82,7 @@ class AuthMethods {
           bio: trimmedBio,
           profileFlag: 'false',
           profileBadge: 'false',
+          blockList: [],
         );
 
         await _firestore.collection('users').doc(cred.user!.uid).set(

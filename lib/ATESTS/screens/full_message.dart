@@ -127,7 +127,7 @@ class _FullMessageState extends State<FullMessage> {
   late CommentSort _selectedCommentSort;
   late CommentFilter _selectedCommentFilter;
 
-  _otherUsers(BuildContext context) async {
+  _otherUsers(BuildContext context, String? uid) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -146,7 +146,10 @@ class _FullMessageState extends State<FullMessage> {
                 onPressed: () {
                   performLoggedUserAction(
                     context: context,
-                    action: () {},
+                    action: () {
+                      FirestoreMethods().addBlockList(uid, _post.uid);
+                      Navigator.pop(context);
+                    },
                   );
                 },
               ),
@@ -823,7 +826,8 @@ class _FullMessageState extends State<FullMessage> {
                                                             ? () => _deletePost(
                                                                 context)
                                                             : () => _otherUsers(
-                                                                context),
+                                                                context,
+                                                                user?.uid),
                                                         icon: const Icon(
                                                             Icons.more_vert),
                                                       ),
