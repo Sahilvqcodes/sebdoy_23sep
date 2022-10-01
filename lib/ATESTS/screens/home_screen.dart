@@ -103,6 +103,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   // Future<void>
   initList() async {
+    print("initList");
     if (loadDataStream != null) {
       loadDataStream!.cancel();
       postsList = [];
@@ -142,6 +143,7 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   initPollList() async {
+    print("initPollList");
     if (loadDataStreamPoll != null) {
       loadDataStreamPoll!.cancel();
       pollsList = [];
@@ -166,7 +168,7 @@ class _FeedScreenState extends State<FeedScreen> {
             break; //the Post element we will send on pair with updatingStream, because a Post constructor makes a listener on a stream.
           case DocumentChangeType.modified:
             updatingStreamPoll.add(Poll.fromMap({
-              ...change.doc.data()!
+              ...change.doc.data()!,
             })); // we are sending a modified object in the stream.
             break;
           case DocumentChangeType.removed:
@@ -793,7 +795,12 @@ class _FeedScreenState extends State<FeedScreen> {
                                     final User? user =
                                         Provider.of<UserProvider>(context)
                                             .getUser;
-
+                                    print(
+                                        "initList PollCard ${pollsList[index].allVotesUIDs}");
+                                    print(
+                                        "initList PollCard ${pollsList[index].totalVotes}");
+                                    print(
+                                        "initList PollCard ${pollsList[index].vote1}");
                                     return PollCard(
                                       poll: pollsList[index],
                                       indexPlacement: index,

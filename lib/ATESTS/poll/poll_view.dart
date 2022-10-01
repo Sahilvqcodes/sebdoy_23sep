@@ -194,15 +194,18 @@ class _PollViewState extends State<PollView> {
 
   @override
   void initState() {
-    hasPollEnded = widget.pollEnded;
-    userHasVoted = widget.hasVoted;
+    //  hasPollEnded = widget.pollEnded;
+    // userHasVoted = widget.hasVoted;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    hasPollEnded = widget.pollEnded;
+    userHasVoted = widget.hasVoted;
     print('hasPollEnded: $hasPollEnded');
     print('userHasVoted: $userHasVoted');
+    print('userHasVoted:userHasVoted $userHasVoted');
 
     PollOption? votedOption = (widget.hasVoted == false
         ? null
@@ -230,6 +233,7 @@ class _PollViewState extends State<PollView> {
               if (widget.hasVoted && widget.userVotedOptionId == null) {
                 throw ('>>>Flutter Polls: User has voted but [userVotedOption] is null.<<<');
               } else {
+                print("userHasVoted $userHasVoted");
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   child: userHasVoted || hasPollEnded

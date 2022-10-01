@@ -260,7 +260,6 @@ class _FullMessagePollState extends State<FullMessagePoll> {
 
   @override
   void initState() {
-    _poll = widget.poll;
     FirebaseFirestore.instance.collection('polls').get().then((value) {
       value.docs.forEach((element) {
         _poll = Poll(
@@ -305,16 +304,16 @@ class _FullMessagePollState extends State<FullMessagePoll> {
     // option1 = '_poll.option1';
 
     currentReplyCommentId = null;
-    getUserDetails();
+    // getUserDetails();
     super.initState();
   }
 
-  getUserDetails() async {
-    User userProfile = await _authMethods.getUserProfileDetails(_poll.uid);
-    setState(() {
-      _userProfile = userProfile;
-    });
-  }
+  // getUserDetails() async {
+  //   User userProfile = await _authMethods.getUserProfileDetails(_poll.uid);
+  //   setState(() {
+  //     _userProfile = userProfile;
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -330,43 +329,44 @@ class _FullMessagePollState extends State<FullMessagePoll> {
   @override
   Widget build(BuildContext context) {
     _poll = widget.poll;
-    FirebaseFirestore.instance.collection('polls').get().then((value) {
-      value.docs.forEach((element) {
-        _poll = Poll(
-            pollTitle: element.get("pollTitle"),
-            option1: element.get("option1"),
-            option2: element.get("option2"),
-            option3: element.get("option3"),
-            option4: element.get("option4"),
-            option5: element.get("option5"),
-            option6: element.get("option6"),
-            option7: element.get("option7"),
-            option8: element.get("option8"),
-            option9: element.get("option9"),
-            option10: element.get("option10"),
-            vote1: element.get("vote1"),
-            vote2: element.get("vote2"),
-            vote3: element.get("vote3"),
-            vote4: element.get("vote4"),
-            vote5: element.get("vote5"),
-            vote6: element.get("vote6"),
-            vote7: element.get("vote7"),
-            vote8: element.get("vote8"),
-            vote9: element.get("vote9"),
-            vote10: element.get("vote10"),
-            totalVotes: element.get("totalVotes"),
-            endDate: element.get("endDate"),
-            pollId: element.get('pollId'),
-            uid: element.get('uid'),
-            username: element.get('username'),
-            profImage: element.get('profImage'),
-            country: element.get('country'),
-            datePublished: element.get('datePublished'),
-            global: element.get('global'),
-            allVotesUIDs: element.get('allVotesUIDs'));
-        reinitializeCommentFilter(_poll);
-      });
-    });
+    print("_poll-fullMESSAGE ${_poll.pollId}");
+    // FirebaseFirestore.instance.collection('polls').get().then((value) {
+    //   value.docs.forEach((element) {
+    //     _poll = Poll(
+    //         pollTitle: element.get("pollTitle"),
+    //         option1: element.get("option1"),
+    //         option2: element.get("option2"),
+    //         option3: element.get("option3"),
+    //         option4: element.get("option4"),
+    //         option5: element.get("option5"),
+    //         option6: element.get("option6"),
+    //         option7: element.get("option7"),
+    //         option8: element.get("option8"),
+    //         option9: element.get("option9"),
+    //         option10: element.get("option10"),
+    //         vote1: element.get("vote1"),
+    //         vote2: element.get("vote2"),
+    //         vote3: element.get("vote3"),
+    //         vote4: element.get("vote4"),
+    //         vote5: element.get("vote5"),
+    //         vote6: element.get("vote6"),
+    //         vote7: element.get("vote7"),
+    //         vote8: element.get("vote8"),
+    //         vote9: element.get("vote9"),
+    //         vote10: element.get("vote10"),
+    //         totalVotes: element.get("totalVotes"),
+    //         endDate: element.get("endDate"),
+    //         pollId: element.get('pollId'),
+    //         uid: element.get('uid'),
+    //         username: element.get('username'),
+    //         profImage: element.get('profImage'),
+    //         country: element.get('country'),
+    //         datePublished: element.get('datePublished'),
+    //         global: element.get('global'),
+    //         allVotesUIDs: element.get('allVotesUIDs'));
+    //     reinitializeCommentFilter(_poll);
+    //   });
+    // });
 
     final User? user = Provider.of<UserProvider>(context).getUser;
     _isPollEnded = (_poll.endDate as Timestamp)
@@ -714,6 +714,8 @@ class _FullMessagePollState extends State<FullMessagePoll> {
                                                     user?.uid ?? ''),
                                             onVoted: (PollOption pollOption,
                                                 int newTotalVotes) async {
+                                              print(
+                                                  "_poll.pollId ${_poll.pollId}");
                                               if (!_isPollEnded) {
                                                 performLoggedUserAction(
                                                     context: context,

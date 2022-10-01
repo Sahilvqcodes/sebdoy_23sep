@@ -32,41 +32,42 @@ class FirestoreMethods {
       String pollId = const Uuid().v1();
 
       Poll poll = Poll(
-          pollId: pollId,
-          uid: uid,
-          username: username,
-          profImage: profImage,
-          country: country,
-          datePublished: DateTime.now(),
-          global: global,
-          endDate: DateTime.now().add(const Duration(
-            days: 0,
-            hours: 0,
-            minutes: 1,
-          )),
-          pollTitle: pollTitle,
-          option1: option1,
-          option2: option2,
-          option3: option3,
-          option4: option4,
-          option5: option5,
-          option6: option6,
-          option7: option7,
-          option8: option8,
-          option9: option9,
-          option10: option10,
-          vote1: [],
-          vote2: [],
-          vote3: [],
-          vote4: [],
-          vote5: [],
-          vote6: [],
-          vote7: [],
-          vote8: [],
-          vote9: [],
-          vote10: [],
-          totalVotes: 0,
-          allVotesUIDs: []);
+        pollId: pollId,
+        uid: uid,
+        allVotesUIDs: [],
+        username: username,
+        profImage: profImage,
+        country: country,
+        datePublished: DateTime.now(),
+        global: global,
+        endDate: DateTime.now().add(const Duration(
+          days: 0,
+          hours: 0,
+          minutes: 1,
+        )),
+        pollTitle: pollTitle,
+        option1: option1,
+        option2: option2,
+        option3: option3,
+        option4: option4,
+        option5: option5,
+        option6: option6,
+        option7: option7,
+        option8: option8,
+        option9: option9,
+        option10: option10,
+        vote1: [],
+        vote2: [],
+        vote3: [],
+        vote4: [],
+        vote5: [],
+        vote6: [],
+        vote7: [],
+        vote8: [],
+        vote9: [],
+        vote10: [],
+        totalVotes: 0,
+      );
 
       _firestore.collection('polls').doc(pollId).set(
             poll.toJson(),
@@ -84,6 +85,7 @@ class FirestoreMethods {
     required int optionIndex,
   }) async {
     String res = "some error occurred";
+    print("poll.pollIdP ${poll.pollId}");
 
     try {
       String pollId = poll.pollId;
@@ -93,9 +95,9 @@ class FirestoreMethods {
       print('pollId : $pollId');
 
       _firestore.collection('polls').doc(pollId).update({
+        'allVotesUIDs': FieldValue.arrayUnion([uid]),
         'totalVotes': FieldValue.increment(1),
         'vote$optionIndex': FieldValue.arrayUnion([uid]),
-        'allVotesUIDs': FieldValue.arrayUnion([uid]),
       });
       updatePollVoteNotification(uid, pollId, pollUId);
       print('POLL SUCCESSFULL');

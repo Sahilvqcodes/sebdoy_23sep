@@ -63,6 +63,7 @@ class _PollCardState extends State<PollCard> {
   void initState() {
     super.initState();
     _poll = widget.poll;
+    print("cdbcdxbncdjbdjbbcdbcdhjbdhjbdhj");
     placement = '#${(widget.indexPlacement + 1).toString()}';
     getAllUserDetails();
     //make sure _initTimer is declared over _startTimer
@@ -112,6 +113,7 @@ class _PollCardState extends State<PollCard> {
   @override
   Widget build(BuildContext context) {
     final User? user = Provider.of<UserProvider>(context).getUser;
+    print("_poll-Testing ${_poll.pollId}");
     // print('_poll.endDate: ${_poll.endDate.runtimeType}');
 
     _isPollEnded = (_poll.endDate as Timestamp)
@@ -169,6 +171,7 @@ class _PollCardState extends State<PollCard> {
                 setState(() {
                   tileClick = true;
                 });
+                print("FullMessagePoll---");
                 Future.delayed(const Duration(milliseconds: 50), () async {
                   await Navigator.push(
                     context,
@@ -424,7 +427,16 @@ class _PollCardState extends State<PollCard> {
                                                                         15)),
                                                           ],
                                                         ),
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          FirestoreMethods()
+                                                              .deletePoll(
+                                                                  _poll.pollId);
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          showSnackBar(
+                                                              'Poll Deleted',
+                                                              context);
+                                                        },
                                                       ),
                                                     ],
                                                   );
@@ -635,16 +647,16 @@ class _PollCardState extends State<PollCard> {
                                           //   },
                                           // );
 
-                                          DocumentSnapshot snap =
-                                              await FirebaseFirestore.instance
-                                                  .collection('polls')
-                                                  .doc(widget.poll.pollId)
-                                                  .get();
+                                          // DocumentSnapshot snap =
+                                          //     await FirebaseFirestore.instance
+                                          //         .collection('polls')
+                                          //         .doc(widget.poll.pollId)
+                                          //         .get();
 
-                                          setState(() {
-                                            _poll = Poll.fromSnap(snap);
-                                            print(_poll.toJson());
-                                          });
+                                          // setState(() {
+                                          //   _poll = Poll.fromSnap(snap);
+                                          //   print(_poll.toJson());
+                                          // });
                                         }
 
                                         print(

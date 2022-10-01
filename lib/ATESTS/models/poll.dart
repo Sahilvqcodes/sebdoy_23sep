@@ -22,7 +22,7 @@ class Poll {
   final String option8;
   final String option9;
   final String option10;
-
+  List<dynamic> allVotesUIDs;
   List<dynamic> vote1;
   List<dynamic> vote2;
   List<dynamic> vote3;
@@ -34,7 +34,7 @@ class Poll {
   List<dynamic> vote9;
   List<dynamic> vote10;
   int totalVotes;
-  final List<dynamic> allVotesUIDs;
+
   StreamController<Poll>? updatingStreamPoll;
   final endDate;
   final datePublished;
@@ -78,6 +78,7 @@ class Poll {
           .where((event) => event.pollId == pollId)
           .listen((event) {
         totalVotes = event.totalVotes;
+        allVotesUIDs = event.allVotesUIDs;
         vote1 = event.vote1;
         vote2 = event.vote2;
         vote3 = event.vote3;
